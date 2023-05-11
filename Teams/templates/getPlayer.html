@@ -1,0 +1,55 @@
+{% extends "./base.html" %}
+
+{% block title %} Player Management {% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <h2>Edit Player</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/updatePlayer/" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input
+                            type="text"
+                            id="id"
+                            name="id"
+                            value="{{player.id}}"
+                            class="form-control"
+                            placeholder="Player"
+                            readonly
+                            required
+                        >
+                    </div>
+                    <div class="form-group">
+                        <input
+                            type="text"
+                            id="first_name"
+                            name="first_name"
+                            value="{{player.first_name}}"
+                            class="form-control"
+                            placeholder="First Name"
+                            maxlength="50"
+                            required
+                        >
+                    </div>
+                    <div class="form-group">
+                        <input
+                            type="text"
+                            id="last_name"
+                            name="last_name"
+                            value="{{player.last_name}}"
+                            class="form-control"
+                            maxlength="50"
+                            required
+                        >
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

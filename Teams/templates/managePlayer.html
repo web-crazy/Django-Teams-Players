@@ -1,0 +1,88 @@
+{% extends "./base.html" %}
+
+{% block title %} Manage Players {% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong class="text-dark">{{ message }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <h2>Manage Players</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/registerPlayer/" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input
+                            type="text"
+                            id="first_name"
+                            name="first_name"
+                            class="form-control"
+                            placeholder="First Name"
+                            maxlength="50"
+                            required
+                        >
+                    </div>
+                    <div class="form-group">
+                        <input
+                            type="text"
+                            id="last_name"
+                            name="last_name"
+                            class="form-control"
+                            placeholder="Last Name"
+                            maxlength="50"
+                            required
+                        >
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h1>List of Players</h1>
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th colspan="2">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in players %}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center py-1">
+                                {{c.id}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center py-1">
+                                {{c.first_name}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center py-1">
+                                {{c.last_name}}
+                            </div>
+                        </td>
+                        <td><a href="getPlayer/{{c.id}}" class="btn btn-info">View</a></td>
+                        <td><a href="deletePlayer/{{c.id}}" class="btn btn-danger btnRemovePlayer">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

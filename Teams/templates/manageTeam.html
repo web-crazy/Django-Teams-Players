@@ -1,0 +1,97 @@
+{% extends "./base.html" %}
+
+{% block title %} Manage Teams {% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong class="text-dark">{{ message }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <h2>Manage Teams</h2>
+        <div class="card">
+            <div class="card-body">
+                <form action="/registerTeam/" method="POST">{% csrf_token %}
+                    <div class="form-group">
+                        <input
+                            type="text"
+                            id="city"
+                            name="city"
+                            class="form-control"
+                            placeholder="City"
+                            maxlength="50"
+                            required
+                        >
+                    </div>
+                    <div class="form-group">
+                        <input
+                            type="text"
+                            id="mascot"
+                            name="mascot"
+                            class="form-control"
+                            placeholder="Mascot"
+                            maxlength="50"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <select name="players" value="{{team.players}}" multiple="multiple" class="form-control select_players_1">
+                            {% for p in players %}
+                                <option value="{{p.id}}">{{p.first_name}} {{p.last_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-block text-white">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-8 col-xl-8">
+        <h1>List of Teams</h1>
+        <div class="table-responsive py-2">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>City</th>
+                        <th>Mascot</th>
+                        <th colspan="2">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in teams %}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center py-1">
+                                {{c.id}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center py-1">
+                                {{c.city}}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center justify-content-center py-1">
+                                {{c.mascot}}
+                            </div>
+                        </td>
+                        <td><a href="getTeam/{{c.id}}" class="btn btn-info">View</a></td>
+                        <td><a href="deleteTeam/{{c.id}}" class="btn btn-danger btnRemoveTeam">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
